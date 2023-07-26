@@ -8,6 +8,10 @@ import ReportTable from '@/components/ReportTable';
 
 
 export default function Home() {
+  
+  const user = null;
+  const userr = {username:'admin', password: 'admin'};
+
   const [data, setData] = useState([]);
   const numLocations = data.length;
   function submitHandler(event) {
@@ -34,6 +38,7 @@ export default function Home() {
       {/* Header */}
       <Header />
       <main className='flex flex-col items-center py-4 space-y-8 '>
+        
         {/* form */}
         <Form handler={submitHandler}/>
         {/* <h3 className="text-2xl text-gray-500">
