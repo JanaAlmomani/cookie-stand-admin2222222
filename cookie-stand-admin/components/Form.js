@@ -2,7 +2,7 @@
 export default function Form(props) {
     return (
       <form
-        className="flex flex-col items-center w-3/5 p-4 m-8 bg-green-300 rounded-md shadow-2xl text-black-500"
+        className=" flex flex-col items-center w-3/5 p-4 m-8 bg-green-300 rounded-md shadow-2xl text-black-500"
         onSubmit={props.handler}>
         <h2 className="mb-8 font-serif text-2xl font-bold text-black-500">Create Cookie Stand</h2>
   
