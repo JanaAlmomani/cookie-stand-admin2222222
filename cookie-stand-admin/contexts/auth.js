@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react"
+import jwt from 'jsonwebtoken'
 
 
 //global var
@@ -18,29 +19,57 @@ export function useAuth(){
 
 export function AuthProvider(props){
 
-
     const [state, setState] = useState({
+        tokens: null,
+        user: null,
         login,
+        logout,
     })
 
-    async function login(username,password){
+    async function login(username, password){
+     
         const options = {
             method : "POST",
             body: JSON.stringify({username,password}),
             headers : {'Content-Type' : 'application/json'}
 
         }
+
         const response = await fetch(tokenUrl,options)
 
         const data = await response.json()
 
         console.log("data",data)
 
+        const decodedAccess = jwt.decode(data.access)
+        console.log("decoded",decodedAccess)
+
+        const newState = {
+            tokens : data,
+            user : {
+                username : decodedAccess.username,
+                email: decodedAccess.email,
+                id: decodedAccess.user_id
+            }
+        }
+
+        setState(prevState =>({...prevState, ...newState}));
+
+
     }
 
-    return(
+    function logout() {
+        const newState = {
+            tokens : null,
+            user : null,
+        }
+
+        setState(prevState =>({...prevState, ...newState}));
+    }
+
+    return (
         <AuthContext.Provider value={state}>
-            {props.childern}
-            </AuthContext.Provider>
+            {props.children}
+        </AuthContext.Provider>
     )
 }
