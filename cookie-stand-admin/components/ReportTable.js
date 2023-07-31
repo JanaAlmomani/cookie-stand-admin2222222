@@ -1,18 +1,12 @@
 import React from 'react';
-import { hours } from '@/data';
+import { hours } from '../data';
 
-export default function ReportTable({ reports }) {
-  const hourTotals = Array.from({ length: hours.length }, () => 0);
-
-  reports.forEach((report) => {
-    report.hourly_sales.forEach((sales, i) => {
-      hourTotals[i] += sales;
-    });
-  });
+export default function ReportTable(props) {
+  const { data } = props; 
 
   return (
-    <div className="flex justify-center mb-4">
-      {reports.length === 0 ? (
+    <div className="flex justify-center mb-4 w-3/5">
+      {data.length === 0 ? (
         <h2 className="text-2xl font-bold text-black-600">No Cookie Stands Available</h2>
       ) : (
         <table className="w-full border-collapse border border-green-500">
@@ -35,7 +29,7 @@ export default function ReportTable({ reports }) {
             </tr>
           </thead>
           <tbody>
-            {reports.map((report) => (
+            {data.map((report) => (
               <tr key={report.id}>
                 <td className="text-center border border-green-500">{report.location}</td>
                 {report.hourly_sales.map((sales, i) => (
@@ -59,11 +53,11 @@ export default function ReportTable({ reports }) {
                   key={i}
                   className="bg-green-500 text-black text-center border border-green-500 font-bold"
                 >
-                  {reports.reduce((acc, report) => acc + report.hourly_sales[i], 0)}
+                  {data.reduce((acc, report) => acc + report.hourly_sales[i], 0)}
                 </td>
               ))}
               <td className="bg-green-500 text-black text-center px-4 py-2 border border-green-500 font-bold">
-                {reports.reduce(
+                {data.reduce(
                   (acc, report) =>
                     acc + report.hourly_sales.reduce((a, b) => a + b, 0),
                   0
